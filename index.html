@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ресторан Бей Хай | 中餐馆 北海</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Глобальные стили */
+    :root {
+      --color-primary: #8B0000; /* Темно-красный */
+      --color-secondary: #FFD700; /* Золотой */
+      --color-background: #121212; /* Почти черный */
+      --color-text: #E0E0E0; /* Светло-серый */
+      --color-highlight: #FF4500; /* Ярко-красный/Оранжевый */
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans", sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      scroll-behavior: smooth;
+    }
+
+    /* Хедер */
+    header {
+      background: linear-gradient(90deg, var(--color-primary), #A52A2A);
+      color: var(--color-secondary);
+      padding: 1.5em;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      border-bottom: 3px solid var(--color-secondary);
+    }
+
+    .lang-switch {
+      position: absolute;
+      top: 15px;
+      right: 50px;
+      background: var(--color-secondary);
+      color: var(--color-primary);
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.1s;
+    }
+
+    .lang-switch:hover {
+      background-color: #f0c500;
+      transform: scale(1.05);
+    }
+
+    /* Секции */
+    section {
+      padding: 4em 10%;
+      text-align: center;
+    }
+
+    h1, h2 {
+      color: var(--color-secondary);
+      font-family: "Noto Serif", serif;
+      margin-bottom: 0.5em;
+    }
+
+    h2 {
+      font-size: 2.2em;
+      border-bottom: 2px solid var(--color-secondary);
+      display: inline-block;
+      padding-bottom: 0.2em;
+    }
+
+    /* Герой-секция */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1550978939-502844599572?q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1500&h=700&fit=crop') center/cover no-repeat;
+      color: #fff;
+      padding: 10em 2em;
+      text-shadow: 1px 1px 5px black;
+    }
+
+    .hero h1 {
+      font-size: 3.5em;
+      margin-bottom: 0.2em;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+    }
+
+    /* Меню */
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3em;
+      margin-top: 3em;
+    }
+
+    .menu-item {
+      background-color: rgba(139, 0, 0, 0.2);
+      border: 2px solid var(--color-secondary);
+      border-radius: 15px;
+      padding: 1.5em;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1em;
+      border: 3px solid var(--color-highlight);
+    }
+
+    .menu-item h3 {
+      color: var(--color-secondary);
+      margin-top: 0;
+      font-size: 1.5em;
+      border-bottom: 1px dashed var(--color-secondary);
+      padding-bottom: 0.2em;
+    }
+
+    .menu-item p {
+      color: var(--color-text);
+      font-size: 0.95em;
+      margin-bottom: 1em;
+    }
+
+    .menu-item strong {
+      display: block;
+      color: var(--color-highlight);
+      font-size: 1.4em;
+      text-align: right;
+    }
+
+    /* Галерея */
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5em;
+      margin-top: 2em;
+    }
+
+    img.gallery {
+      width: 100%;
+      max-width: 350px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 3px solid var(--color-secondary);
+      transition: transform 0.3s;
+    }
+
+    img.gallery:hover {
+      transform: scale(1.05);
+    }
+
+    /* Контакты */
+    .contact-info {
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-top: 2em;
+    }
+
+    iframe {
+      border: 3px solid var(--color-secondary);
+      border-radius: 12px;
+      width: 100%;
+      height: 450px;
+      margin-top: 2em;
+    }
+
+    /* Футер */
+    footer {
+      background: var(--color-primary);
+      color: var(--color-secondary);
+      text-align: center;
+      padding: 1.5em;
+      border-top: 3px solid var(--color-secondary);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="lang-switch" onclick="switchLang()">中文</button>
+    <h1 id="title">Ресторан китайской кухни «Бей Хай»</h1>
+  </header>
+
+  <section class="hero">
+    <h1 id="hero-title">Добро пожаловать в «Бей Хай»</h1>
+    <p id="hero-text">Погрузитесь в атмосферу Поднебесной — изысканная кухня, теплый прием и вкус настоящего Китая.</p>
+  </section>
+
+  <section id="about">
+    <h2 id="about-title">О ресторане</h2>
+    <p id="about-text">
+      «Бей Хай» — это не просто ресторан, это путешествие в мир аутентичной китайской кухни. Наши повара — мастера из провинции Гуандун, которые готовят по традиционным рецептам, используя только свежие ингредиенты. У нас вы найдете идеальный баланс ароматов, текстур и эстетики в каждом блюде. Идеальное место для семейного ужина, деловой встречи или романтического вечера.
+    </p>
+  </section>
+
+  <section id="menu">
+    <h2 id="menu-title">Меню</h2>
+
+    <div class="menu">
+      <div class="menu-item">
+        <img src="https://avatars.mds.yandex.net/get-eda/3525661/df8f6ff99603a394cfd39dbf0b482429/1440x1082" alt="Утка по-пекински" />
+        <h3 id="dish1">Утка по-пекински</h3>
+        <p id="dish1-desc">Классика китайской кухни: хрустящая кожа, мягкое мясо, подается с тонкими блинчиками, зеленым луком и соусом хойсин.</p>
+        <strong id="dish1-price">₽1,950</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://chjun-go.ru/upload/iblock/021/ddqwdf69fa2o68btaw6532b3vmphreqi.jpg" alt="Рыба в кисло-сладком соусе" />
+        <h3 id="dish2">Рыба в кисло-сладком соусе (松鼠桂鱼)</h3>
+        <p id="dish2-desc">Традиционное блюдо провинции Аньхой: филе рыбы, обжаренное до хрустящей корочки, политое густым кисло-сладким соусом.</p>
+        <strong id="dish2-price">₽1,400</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://avatars.mds.yandex.net/get-vertis-journal/4220003/2bfc67a9-fcc5-4ff0-a717-d75ba6013f36.jpeg/1600x1600" alt="Димсамы" />
+        <h3 id="dish3">Димсамы ассорти (点心)</h3>
+        <p id="dish3-desc">Набор паровых пельменей и булочек с разнообразными начинками: креветками, свининой, овощами. Идеальная закуска.</p>
+        <strong id="dish3-price">₽750</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://i.pinimg.com/originals/60/28/f5/6028f58608344db6b31e4bb9fe704ab9.jpg" alt="Курица Кунг Пао" />
+        <h3 id="dish4">Курица Кунг Пао (宫保鸡丁)</h3>
+        <p id="dish4-desc">Знаменитое сычуаньское блюдо: нежное куриное филе, арахис, овощи и пикантный соус с чили-перцем.</p>
+        <strong id="dish4-price">₽890</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_6727cb77edab5921b02f604e_6727cdaf75f1157eb15b520a/scale_1200" alt="Жареная лапша" />
+        <h3 id="dish5">Жареная лапша Чао Мянь (炒面)</h3>
+        <p id="dish5-desc">Классическая жареная лапша с говядиной, ростками фасоли, грибами и специальным темным соусом.</p>
+        <strong id="dish5-price">₽680</strong>
+      </div>
+      
+      <div class="menu-item">
+        <img src="https://i.ytimg.com/vi/Y1cn_Mfpzk4/maxresdefault.jpg" alt="Говядина с брокколи" />
+        <h3 id="dish6">Говядина с брокколи в устричном соусе</h3>
+        <p id="dish6-desc">Сочная говядина, свежая брокколи и насыщенный устричный соус. Идеально с рисом.</p>
+        <strong id="dish6-price">₽950</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://static.insales-cdn.com/files/1/7185/37461009/original/mceu_80881733611733659024630-1733659024656.jpg" alt="Мапо Тофу" />
+        <h3 id="dish7">Мапо Тофу (麻婆豆腐)</h3>
+        <p id="dish7-desc">Острое сычуаньское блюдо: мягкий тофу и фарш, тушеные в пикантном соусе с добавлением сычуаньского перца.</p>
+        <strong id="dish7-price">₽720</strong>
+      </div>
+
+      <div class="menu-item">
+        <img src="https://avatars.mds.yandex.net/i?id=f76ad433f05eabf3d62edd9381614656_l-9240324-images-thumbs&n=13" alt="Жареный рис Янгчжоу" />
+        <h3 id="dish8">Жареный рис Янгчжоу (扬州炒饭)</h3>
+        <p id="dish8-desc">Классика кантонской кухни: рис, жаренный с креветками, ветчиной, курицей и свежими овощами.</p>
+        <strong id="dish8-price">₽650</strong>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <h2 id="gallery-title">Галерея</h2>
+    <div class="gallery-container">
+      <img class="gallery" src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d4b68e123882211.60f8118d88df1.jpg" alt="Уютный интерьер ресторана с китайским декором" />
+      <img class="gallery" src="https://i.pinimg.com/originals/ea/9c/66/ea9c6633d9b9d789a004531d5b719664.jpg" alt="Общий зал ресторана" />
+      <img class="gallery" src="https://i.pinimg.com/736x/ca/3c/b7/ca3cb75c24b49922f9471c35d0c5047b.jpg" alt="Изысканное блюдо на китайском столе" />
+      <img class="gallery" src="https://i.pinimg.com/736x/ec/6c/7a/ec6c7a70369e62208574703427748ba1.jpg" alt="Вход в ресторан с фонариками" />
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 id="contact-title">Контакты</h2>
+    <div class="contact-info" id="contact-text">
+      <p>г. Большой Камень, ул. Приморского Комсомола, 2</p>
+      <p>📞 +7 (42335) 5-55-55</p>
+      <p>✉️ <a href="mailto:beihai.resto@email.ru" style="color: var(--color-secondary);">beihai.resto@email.ru</a></p>
+      <p>🕒 Ежедневно 12:00–23:00</p>
+    </div>
+    <iframe
+      src="https://maps.google.com/maps?q=%D0%B3.%20%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9%20%D0%9A%D0%B0%D0%BC%D0%B5%D0%BD%D1%8C,%20%D1%83%D0%BB.%20%D0%9F%D1%80%D0%B8%D0%BC%D0%BE%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%9A%D0%BE%D0%BC%D1%81%D0%BE%D0%BC%D0%BE%D0%BB%D0%B0,%202&t=&z=13&ie=UTF8&iwloc=&output=embed"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <footer>
+    <p>© 2025 Ресторан «Бей Хай» | 北海餐厅. Все права защищены.</p>
+  </footer>
+
+  <script>
+    let currentLang = "ru";
+
+    const translations = {
+        ru: {
+            switch: "中文",
+            title: "Ресторан китайской кухни «Бей Хай»",
+            heroTitle: "Добро пожаловать в «Бей Хай»",
+            heroText: "Погрузитесь в атмосферу Поднебесной — изысканная кухня, теплый прием и вкус настоящего Китая.",
+            aboutTitle: "О ресторане",
+            aboutText: "«Бей Хай» — это не просто ресторан, это путешествие в мир аутентичной китайской кухни. Наши повара — мастера из провинции Гуандун, которые готовят по традиционным рецептам, используя только свежие ингредиенты. У нас вы найдете идеальный баланс ароматов, текстур и эстетики в каждом блюде. Идеальное место для семейного ужина, деловой встречи или романтического вечера.",
+            menuTitle: "Меню",
+            dish1: "Утка по-пекински",
+            dish2: "Рыба в кисло-сладком соусе (松鼠桂鱼)",
+            dish3: "Димсамы ассорти (点心)",
+            dish4: "Курица Кунг Пао (宫保鸡丁)",
+            dish5: "Жареная лапша Чао Мянь (炒面)",
+            dish6: "Говядина с брокколи в устричном соусе",
+            dish7: "Мапо Тофу (麻婆豆腐)",
+            dish8: "Жареный рис Янгчжоу (扬州炒饭)",
+            dish1Desc: "Классика китайской кухни: хрустящая кожа, мягкое мясо, подается с тонкими блинчиками, зеленым луком и соусом хойсин.",
+            dish2Desc: "Традиционное блюдо провинции Аньхой: филе рыбы, обжаренное до хрустящей корочки, политое густым кисло-сладким соусом.",
+            dish3Desc: "Набор паровых пельменей и булочек с разнообразными начинками: креветками, свининой, овощами. Идеальная закуска.",
+            dish4Desc: "Знаменитое сычуаньское блюдо: нежное куриное филе, арахис, овощи и пикантный соус с чили-перцем.",
+            dish5Desc: "Классическая жареная лапша с говядиной, ростками фасоли, грибами и специальным темным соусом.",
+            dish6Desc: "Сочная говядина, свежая брокколи и насыщенный устричный соус. Идеально с рисом.",
+            dish7Desc: "Острое сычуаньское блюдо: мягкий тофу и фарш, тушеные в пикантном соусе с добавлением сычуаньского перца.",
+            dish8Desc: "Классика кантонской кухни: рис, жаренный с креветками, ветчиной, курицей и свежими овощами.",
+            galleryTitle: "Галерея",
+            contactTitle: "Контакты",
+            contactText: "г. Большой Камень, ул. Приморского Комсомола, 2<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 Ежедневно **12:00–23:00**",
+            footer: "© 2025 Ресторан «Бей Хай» | 北海餐厅. Все права защищены."
+        },
+        cn: {
+            switch: "Русский",
+            title: "中餐馆 北海",
+            heroTitle: "欢迎来到北海餐厅",
+            heroText: "沉浸在中国的味道与文化中——精致菜肴，热情招待，地道风味。",
+            aboutTitle: "关于我们",
+            aboutText: "北海餐厅不仅仅是一家餐馆，它是一场通往地道中国美食世界的旅程。我们的主厨来自广东省，他们采用传统食谱和新鲜食材烹饪，为您带来完美的味道、口感和美感平衡。这里是家庭聚餐、商务会谈或浪漫夜晚的理想场所。",
+            menuTitle: "菜单",
+            dish1: "北京烤鸭",
+            dish2: "松鼠桂鱼",
+            dish3: "点心拼盘",
+            dish4: "宫保鸡丁",
+            dish5: "炒面 (Chow Mein)",
+            dish6: "蚝油西蓝花炒牛肉",
+            dish7: "麻婆豆腐",
+            dish8: "扬州炒饭",
+            dish1Desc: "中国经典菜肴：脆皮嫩肉，配薄饼、葱丝和海鲜酱。",
+            dish2Desc: "安徽传统名菜：鱼片炸至酥脆，浇上浓郁的糖醋汁。",
+            dish3Desc: "各种蒸饺和包子组合：虾仁、猪肉和蔬菜馅料。完美的开胃小吃。",
+            dish4Desc: "著名的川菜：嫩鸡肉、花生、蔬菜和辣味的辣椒酱。",
+            dish5Desc: "经典炒面：牛肉、豆芽、蘑菇和特制黑酱炒制。",
+            dish6Desc: "鲜嫩的牛肉、新鲜的西兰花和浓郁的蚝油。配米饭绝佳。",
+            dish7Desc: "麻辣川菜：嫩豆腐和肉末，用花椒麻辣酱炖制。",
+            dish8Desc: "经典粤菜：米饭与虾仁、火腿、鸡肉和新鲜蔬菜同炒。",
+            galleryTitle: "画廊",
+            contactTitle: "联系我们",
+            contactText: "滨海市 共青团大街2号<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 每天 **12:00–23:00**",
+            footer: "© 2025 北海餐厅. 版权所有。"
+        }
+    };
+
+    function switchLang() {
+        currentLang = currentLang === "ru" ? "cn" : "ru";
+        const langData = translations[currentLang];
+
+        document.querySelector(".lang-switch").textContent = langData.switch;
+        document.getElementById("title").textContent = langData.title;
+        document.getElementById("hero-title").textContent = langData.heroTitle;
+        document.getElementById("hero-text").textContent = langData.heroText;
+        document.getElementById("about-title").textContent = langData.aboutTitle;
+        document.getElementById("about-text").textContent = langData.aboutText;
+        document.getElementById("menu-title").textContent = langData.menuTitle;
+
+        // Перевод блюд
+        for (let i = 1; i <= 8; i++) {
+            document.getElementById(`dish${i}`).textContent = langData[`dish${i}`];
+            document.getElementById(`dish${i}-desc`).textContent = langData[`dish${i}Desc`];
+        }
+
+        document.getElementById("gallery-title").textContent = langData.galleryTitle;
+        document.getElementById("contact-title").textContent = langData.contactTitle;
+        document.getElementById("contact-text").innerHTML = langData.contactText;
+        document.querySelector("footer p").textContent = langData.footer;
+
+        document.documentElement.lang = currentLang;
+    }
+  </script>
+</body>
+</html>
