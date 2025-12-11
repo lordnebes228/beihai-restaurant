@@ -169,7 +169,8 @@
     /* Кнопка "Заказ" */
     .order-button {
       display: inline-block;
-      margin-top: 2em;
+      /* Убран верхний margin, т.к. кнопка теперь идет после блока контактов */
+      margin-top: 1.5em; 
       margin-bottom: 1.5em;
       padding: 15px 30px;
       background-color: var(--color-highlight); /* Ярко-красный/Оранжевый */
@@ -195,6 +196,7 @@
       font-size: 1.1em;
       line-height: 1.8;
       margin-top: 2em;
+      /* Убран нижний margin, чтобы кнопка была ближе */
     }
 
     iframe {
@@ -308,17 +310,17 @@
   <section id="contact">
     <h2 id="contact-title">Контакты</h2>
 
-    <a href="https://bei-pnkbjgph3-lordnebes228s-projects.vercel.app/" target="_blank" class="order-button" id="order-button-text">
+    <div class="contact-info" id="contact-text">
+      <p>г. Большой Камень, ул. Приморского Комсомола, 2</p>
+      <p>📞 **+7 (42335) 5-55-55**</p>
+      <p>✉️ <a href="mailto:beihai.resto@email.ru" style="color: var(--color-secondary);">beihai.resto@email.ru</a></p>
+      <p>🕒 Ежедневно **12:00–23:00**</p>
+    </div>
+    
+    <a href="ВАША_ССЫЛКА_НА_ДРУГОЙ_САЙТ" target="_blank" class="order-button" id="order-button-text">
         Онлайн-заказ и бронирование
     </a>
 
-    <div class="contact-info" id="contact-text">
-      <p>г. Большой Камень, ул. Приморского Комсомола, 2</p>
-      <p>📞 +7 (42335) 5-55-55</p>
-      <p>✉️ <a href="mailto:beihai.resto@email.ru" style="color: var(--color-secondary);">beihai.resto@email.ru</a></p>
-      <p>🕒 Ежедневно 12:00–23:00</p>
-    </div>
-    
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1197.6477176159515!2d132.3299719363842!3d43.1114002674488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5fb7b80a6519142f%3A0x6b4c107e0c476317!2z0KHQuNC80YIg0JHQsNGA0LAg0JrQuNC10YDQsA!5e0!3m2!1sru!2sru!4v1703648400000!5m2!1sru!2sru"
       allowfullscreen=""
@@ -366,7 +368,7 @@
             
             galleryTitle: "Галерея",
             contactTitle: "Контакты",
-            contactText: "г. Большой Камень, ул. Приморского Комсомола, 2<br>📞 +7 (42335) 5-55-55<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 Ежедневно **12:00–23:00**",
+            contactText: "г. Большой Камень, ул. Приморского Комсомола, 2<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 Ежедневно **12:00–23:00**",
             footer: "© 2025 Ресторан «Бей Хай» | 北海餐厅. Все права защищены."
         },
         cn: {
@@ -385,7 +387,7 @@
             dish3: "虾仁点心",
             dish4: "馄饨汤",
             dish5: "糖醋猪肉",
-            dish6: "蚝油西兰花炒牛肉",
+            dish6: "蚝油西蓝花炒牛肉",
             dish7: "麻婆豆腐",
             dish8: "扬州炒饭",
             
@@ -400,7 +402,7 @@
             
             galleryTitle: "画廊",
             contactTitle: "联系我们",
-            contactText: "滨海市 共青团大街2号<br>📞 +7 (42335) 5-55-55<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 每天 12:00–23:00",
+            contactText: "滨海市 共青团大街2号<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 每天 **12:00–23:00**",
             footer: "© 2025 北海餐厅. 版权所有。"
         }
     };
@@ -436,4 +438,3 @@
   </script>
 </body>
 </html>
-
