@@ -2,309 +2,353 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DATA TRUCK PRO — Вариационная Модель</title>
+    <title>DATA WARS: TRUCK EDITION</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
         :root {
-            --primary: #6366f1;
-            --accent: #f43f5e;
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --success: #22c55e;
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff00ff;
+            --neon-green: #00ff9d;
+            --bg-dark: #050505;
+            --panel: #111111;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at top, #1e1b4b, #0f172a);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
             margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        .container { max-width: 1000px; width: 100%; }
+        .main-ui {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px rgba(99, 102, 241, 0.6); }
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            text-align: center;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 20px 0;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+        }
 
-        /* Панель настроек */
-        .dashboard {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 24px;
+        /* Панель управления (Кокпит) */
+        .cockpit {
+            background: var(--panel);
+            border: 2px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 30px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            gap: 25px;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            margin-bottom: 40px;
         }
 
-        .control-item { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 0.75rem; color: #818cf8; font-weight: 800; text-transform: uppercase; }
+        .control-slot { display: flex; flex-direction: column; gap: 10px; }
+        label { color: var(--neon-blue); text-transform: uppercase; font-weight: bold; font-size: 0.9rem; letter-spacing: 2px; }
 
         select {
-            background: #0f172a;
-            color: white;
-            border: 1px solid #334155;
+            background: #000;
+            color: #fff;
+            border: 1px solid var(--neon-blue);
             padding: 12px;
-            border-radius: 12px;
-            outline: none;
-            transition: 0.3s;
-        }
-        select:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); }
-
-        .btn-group { display: flex; gap: 10px; align-items: flex-end; }
-        button {
-            padding: 14px 24px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 900;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
             cursor: pointer;
+        }
+
+        .action-btns { display: flex; gap: 15px; align-items: flex-end; }
+        
+        button {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
             text-transform: uppercase;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .btn-start { background: var(--primary); color: white; flex: 2; }
-        .btn-start:hover { transform: scale(1.05); background: #4f46e5; }
-        .btn-race { background: var(--accent); color: white; flex: 1; }
-        .btn-race:hover { background: #e11d48; box-shadow: 0 0 20px rgba(244, 63, 94, 0.4); }
 
-        /* Трассы */
-        #world { background: rgba(2, 6, 23, 0.6); padding: 25px; border-radius: 24px; border: 1px solid #1e293b; }
+        .btn-launch { 
+            background: var(--neon-blue); 
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
 
-        .track-box { margin-bottom: 20px; position: relative; }
-        .track-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; font-weight: 500; }
+        .btn-race { 
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+        }
 
-        .road {
-            height: 70px;
-            background: #0f172a;
+        button:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); }
+
+        /* Трасса будущего */
+        .track-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .lane {
+            background: rgba(0,0,0,0.8);
+            height: 90px;
             border-radius: 15px;
             position: relative;
+            border: 1px solid #333;
+            overflow: hidden;
             display: flex;
             align-items: center;
-            overflow: hidden;
-            border: 2px solid #334155;
         }
 
-        /* Анимированная разметка */
-        .road::before {
-            content: "";
+        .lane-label {
             position: absolute;
-            width: 200%;
-            height: 4px;
-            background: repeating-linear-gradient(90deg, #fff 0, #fff 20px, transparent 20px, transparent 40px);
+            top: 5px;
+            left: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            z-index: 1;
+        }
+
+        /* Эффект движения дороги */
+        .road-anim {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, var(--neon-blue) 0, var(--neon-blue) 20px, transparent 20px, transparent 60px);
+            bottom: 15px;
+            opacity: 0.2;
+        }
+
+        .moving .road-anim { animation: moveRoad 0.5s linear infinite; }
+        @keyframes moveRoad { from { background-position: 0; } to { background-position: -60px; } }
+
+        .truck-unit {
+            position: absolute;
+            left: 10px;
+            font-size: 50px;
+            transition: left 0.1s linear;
+            z-index: 10;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+        }
+
+        .speed-flame {
+            position: absolute;
+            right: 100%;
             top: 50%;
             transform: translateY(-50%);
-            opacity: 0.1;
-        }
-
-        .road.moving::before { animation: dash 0.5s linear infinite; }
-        @keyframes dash { to { transform: translate(-40px, -50%); } }
-
-        .truck {
-            position: absolute;
-            left: 0;
-            width: 80px;
-            font-size: 45px;
-            display: flex;
-            justify-content: center;
-            z-index: 5;
-            cursor: pointer;
-            transition: left 0.1s linear, transform 0.2s;
-        }
-        .truck:hover { transform: scale(1.2) rotate(-5deg); filter: brightness(1.5); }
-        
-        .finish-line {
-            position: absolute;
-            right: 10px;
-            height: 80%;
-            width: 10px;
-            background: repeating-linear-gradient(0deg, #fff 0, #fff 10px, #000 10px, #000 20px);
-            border-radius: 2px;
-        }
-
-        /* Результаты */
-        .leaderboard {
-            margin-top: 20px;
-            background: var(--card);
-            padding: 15px;
-            border-radius: 15px;
+            width: 50px;
+            height: 20px;
+            background: linear-gradient(-90deg, var(--neon-pink), transparent);
+            border-radius: 50%;
             display: none;
         }
-        .leader-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #334155; }
+
+        .moving .speed-flame { display: block; opacity: 0.6; }
+
+        /* Статистика / HUD */
+        .hud {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .hud-card {
+            flex: 1;
+            background: #111;
+            border-bottom: 4px solid var(--neon-blue);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .hud-val { font-family: 'Orbitron'; font-size: 2rem; color: var(--neon-green); display: block; }
+        .hud-label { color: #666; font-size: 0.8rem; text-transform: uppercase; }
+
+        /* Всплывающее уведомление */
+        #achievement {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: var(--neon-green);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.5s;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div id="achievement">🏆 ДОСТИЖЕНИЕ: СВЕРХЗВУК!</div>
+
+<div class="main-ui">
     <header>
-        <h1>Data Truck Pro</h1>
-        <p style="color: #94a3b8">Курсовой проект: Вариационная модель передачи данных</p>
+        <h1>Data Transmit</h1>
     </header>
 
-    <div class="dashboard">
-        <div class="control-item">
-            <label>Груз (Данные)</label>
-            <select id="cargoSize">
-                <option value="10">🎵 Альбом (10 МБ)</option>
-                <option value="100">🎬 Клип (100 МБ)</option>
-                <option value="1000">📦 Пакет игр (1 ГБ)</option>
-                <option value="5000">🌌 База данных (5 ГБ)</option>
+    <div class="cockpit">
+        <div class="control-slot">
+            <label>Груз (Size)</label>
+            <select id="cargo">
+                <option value="20">💿 MP3 ТРЕК (20 МБ)</option>
+                <option value="200">🎥 HD ВИДЕО (200 МБ)</option>
+                <option value="2000">🎮 CYBERPUNK 2077 (2 ГБ)</option>
+                <option value="10000">💾 АРХИВ NASA (10 ГБ)</option>
             </select>
         </div>
 
-        <div class="control-item">
-            <label>Тип соединения</label>
-            <select id="connType">
-                <option value="2">Slow 3G (2 МБ/с)</option>
-                <option value="50" selected>Standard 4G (50 МБ/с)</option>
-                <option value="400">Ultra 5G (400 МБ/с)</option>
-                <option value="1200">Optical Wi-Fi (1.2 ГБ/с)</option>
+        <div class="control-slot">
+            <label>Протокол (Speed)</label>
+            <select id="protocol">
+                <option value="5">GPRS / 3G (5 МБ/с)</option>
+                <option value="60" selected>LTE / 4G (60 МБ/с)</option>
+                <option value="500">5G SATELLITE (500 МБ/с)</option>
+                <option value="2000">QUANTUM LINK (2 ГБ/с)</option>
             </select>
         </div>
 
-        <div class="control-item">
-            <label>Среда передачи</label>
-            <select id="roadQuality">
-                <option value="1">Пустая трасса (100%)</option>
-                <option value="0.6">Городской трафик (-40%)</option>
-                <option value="0.2">Час пик / Гроза (-80%)</option>
+        <div class="control-slot">
+            <label>Помехи (Ping)</label>
+            <select id="interference">
+                <option value="1">ЧИСТЫЙ КАНАЛ (0ms)</option>
+                <option value="0.5">СРЕДНИЙ ШУМ (150ms)</option>
+                <option value="0.1">МЕТЕОРИТНЫЙ ДОЖДЬ (900ms)</option>
             </select>
         </div>
 
-        <div class="btn-group">
-            <button class="btn-start" onclick="runOne()">Запуск</button>
-            <button class="btn-race" onclick="runRace()">Гонка</button>
+        <div class="action-btns">
+            <button class="btn-launch" onclick="launchSingle()">Старт</button>
+            <button class="btn-race" onclick="launchRace()">Гонка</button>
         </div>
     </div>
 
-    <div id="world"></div>
-    <div id="leaderboard" class="leaderboard"></div>
+    <div class="track-zone" id="track-zone">
+        </div>
+
+    <div class="hud">
+        <div class="hud-card">
+            <span class="hud-val" id="hud-speed">0</span>
+            <span class="hud-label">Текущая скорость (МБ/с)</span>
+        </div>
+        <div class="hud-card" style="border-color: var(--neon-pink);">
+            <span class="hud-val" id="hud-time">0.0</span>
+            <span class="hud-label">Таймер передачи (сек)</span>
+        </div>
+    </div>
 </div>
 
 <script>
-    const world = document.getElementById('world');
-    const board = document.getElementById('leaderboard');
-    const truckIcons = { '2': '🚜', '50': '🚚', '400': '🏎️', '1200': '🚀' };
-    let timers = [];
-    let results = [];
+    const zone = document.getElementById('track-zone');
+    const emojis = { '5': '🚜', '60': '🚚', '500': '🏎️', '2000': '🚀' };
+    let activeTimers = [];
 
-    // Звуковой движок (Web Audio API)
-    function playSound(freq, type, duration) {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
-    }
-
-    function createTrack(id, label, speed, cargo, quality) {
-        const div = document.createElement('div');
-        div.className = 'track-box';
-        div.innerHTML = `
-            <div class="track-meta">
-                <span>${label}</span>
-                <span id="speed-val-${id}">${(speed * quality).toFixed(1)} МБ/с</span>
-            </div>
-            <div class="road" id="road-${id}">
-                <div class="finish-line"></div>
-                <div class="truck" id="truck-${id}" title="Нитро!">
-                    ${truckIcons[speed] || '🚚'}
-                </div>
+    function createLane(id, name, speed, quality) {
+        const lane = document.createElement('div');
+        lane.className = 'lane';
+        lane.id = `lane-${id}`;
+        lane.innerHTML = `
+            <div class="lane-label">${name} | СТАБИЛЬНОСТЬ: ${quality*100}%</div>
+            <div class="road-anim"></div>
+            <div class="truck-unit" id="truck-${id}">
+                <div class="speed-flame"></div>
+                ${emojis[speed] || '🚚'}
             </div>
         `;
-        return div;
+        return lane;
     }
 
-    function runOne() {
-        reset();
-        const s = document.getElementById('connType');
-        const speed = parseFloat(s.value);
-        const name = s.options[s.selectedIndex].text;
-        const cargo = parseFloat(document.getElementById('cargoSize').value);
-        const quality = parseFloat(document.getElementById('roadQuality').value);
+    function launchSingle() {
+        resetAll();
+        const cargo = parseFloat(document.getElementById('cargo').value);
+        const speed = parseFloat(document.getElementById('protocol').value);
+        const quality = parseFloat(document.getElementById('interference').value);
+        const name = document.getElementById('protocol').options[document.getElementById('protocol').selectedIndex].text;
 
-        world.appendChild(createTrack(0, name, speed, cargo, quality));
-        startLogic(0, name, speed, cargo, quality);
+        zone.appendChild(createLane(0, name, speed, quality));
+        runEngine(0, speed, cargo, quality, true);
     }
 
-    function runRace() {
-        reset();
-        const cargo = parseFloat(document.getElementById('cargoSize').value);
-        const quality = parseFloat(document.getElementById('roadQuality').value);
-        const opts = document.getElementById('connType').options;
+    function launchRace() {
+        resetAll();
+        const cargo = parseFloat(document.getElementById('cargo').value);
+        const quality = parseFloat(document.getElementById('interference').value);
+        const opts = document.getElementById('protocol').options;
 
         for (let i = 0; i < opts.length; i++) {
             const speed = parseFloat(opts[i].value);
-            world.appendChild(createTrack(i, opts[i].text, speed, cargo, quality));
-            startLogic(i, opts[i].text, speed, cargo, quality);
+            zone.appendChild(createLane(i, opts[i].text, speed, quality));
+            runEngine(i, speed, cargo, quality, false);
         }
     }
 
-    function startLogic(id, name, speed, cargo, quality) {
+    function runEngine(id, speed, cargo, quality, updateHud) {
         const truck = document.getElementById(`truck-${id}`);
-        const road = document.getElementById(`road-${id}`);
-        road.classList.add('moving');
-        playSound(200 + speed/2, 'sawtooth', 0.5);
+        const lane = document.getElementById(`lane-${id}`);
+        lane.classList.add('moving');
 
-        let loaded = 0;
-        let nitro = 1;
+        let delivered = 0;
         const startTime = Date.now();
+        const realSpeed = speed * quality;
+        
+        // Проверка на ачивку
+        if (realSpeed >= 1000) showAchievement();
 
-        // Фишка: Клик по грузовику дает ускорение (Нитро)
-        truck.onclick = () => { 
-            nitro = 2; 
-            truck.style.filter = 'drop-shadow(0 0 10px #f43f5e)';
-            playSound(800, 'square', 0.1);
-            setTimeout(() => { nitro = 1; truck.style.filter = 'none'; }, 1000);
-        };
+        const interval = setInterval(() => {
+            // Имитация микро-задержек (джиттер)
+            const jitter = 0.9 + Math.random() * 0.2;
+            delivered += (realSpeed * jitter) / 10;
+            
+            let progress = (delivered / cargo) * 100;
+            if (progress >= 100) progress = 100;
 
-        const t = setInterval(() => {
-            loaded += (speed * quality * nitro) / 10;
-            let p = (loaded / cargo) * 100;
-            if (p > 100) p = 100;
+            const xPos = (progress * (lane.offsetWidth - 100)) / 100;
+            truck.style.left = xPos + 'px';
 
-            truck.style.left = `calc(${p}% - 80px)`;
+            if (updateHud) {
+                document.getElementById('hud-speed').innerText = Math.round(realSpeed * jitter);
+                document.getElementById('hud-time').innerText = ((Date.now() - startTime)/1000).toFixed(1);
+            }
 
-            if (p >= 100) {
-                clearInterval(t);
-                road.classList.remove('moving');
-                const time = ((Date.now() - startTime)/1000).toFixed(2);
-                results.push({name, time});
-                updateBoard();
-                playSound(600, 'sine', 0.3);
+            if (progress >= 100) {
+                clearInterval(interval);
+                lane.classList.remove('moving');
+                truck.style.filter = 'drop-shadow(0 0 20px var(--neon-green))';
             }
         }, 100);
-        timers.push(t);
+        activeTimers.push(interval);
     }
 
-    function reset() {
-        timers.forEach(clearInterval);
-        world.innerHTML = '';
-        board.innerHTML = '<h3>Результаты заезда:</h3>';
-        board.style.display = 'none';
-        results = [];
+    function resetAll() {
+        activeTimers.forEach(clearInterval);
+        zone.innerHTML = '';
+        document.getElementById('hud-speed').innerText = '0';
+        document.getElementById('hud-time').innerText = '0.0';
     }
 
-    function updateBoard() {
-        board.style.display = 'block';
-        results.sort((a,b) => a.time - b.time);
-        board.innerHTML = '<h3>🏆 Таблица лидеров:</h3>';
-        results.forEach((r, i) => {
-            board.innerHTML += `<div class="leader-item"><span>${i+1}. ${r.name}</span> <b>${r.time} сек</b></div>`;
-        });
+    function showAchievement() {
+        const el = document.getElementById('achievement');
+        el.style.right = '20px';
+        setTimeout(() => el.style.right = '-350px', 3000);
     }
 </script>
+
 </body>
 </html>
