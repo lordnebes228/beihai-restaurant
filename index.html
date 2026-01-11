@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DATA WARS: TRUCK EDITION</title>
+    <title>DATA WARS: TERMINAL EDITION 2026</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
 
@@ -10,8 +10,8 @@
             --neon-blue: #00f2ff;
             --neon-pink: #ff00ff;
             --neon-green: #00ff9d;
-            --bg-dark: #050505;
-            --panel: #111111;
+            --bg-dark: #020617;
+            --panel: rgba(15, 23, 42, 0.9);
         }
 
         body {
@@ -20,333 +20,305 @@
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
             overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%);
         }
 
         .main-ui {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
         }
 
         header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
             text-align: center;
-            font-size: 3.5rem;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            margin: 20px 0;
-            color: #fff;
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+            font-size: 3rem;
+            letter-spacing: 10px;
+            margin: 10px 0;
+            background: linear-gradient(to right, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.5));
         }
 
-        /* Панель управления (Кокпит) */
+        /* Футуристичный пульт управления */
         .cockpit {
             background: var(--panel);
-            border: 2px solid var(--neon-blue);
+            border: 1px solid rgba(0, 242, 255, 0.3);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            position: relative;
         }
 
-        .control-slot { display: flex; flex-direction: column; gap: 10px; }
-        label { color: var(--neon-blue); text-transform: uppercase; font-weight: bold; font-size: 0.9rem; letter-spacing: 2px; }
+        .cockpit::before {
+            content: "SYSTEM DIAGNOSTICS: OK";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-dark);
+            padding: 0 10px;
+            font-size: 0.7rem;
+            color: var(--neon-blue);
+            font-family: 'Orbitron';
+        }
+
+        .control-slot { display: flex; flex-direction: column; gap: 8px; }
+        label { color: #64748b; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; }
 
         select {
             background: #000;
-            color: #fff;
-            border: 1px solid var(--neon-blue);
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .action-btns { display: flex; gap: 15px; align-items: flex-end; }
-        
-        button {
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
+            color: var(--neon-blue);
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Rajdhani';
+            outline: none;
         }
 
         .btn-launch { 
             background: var(--neon-blue); 
-            color: #000;
-            box-shadow: 0 0 15px var(--neon-blue);
+            color: #000; 
+            font-family: 'Orbitron';
+            font-weight: 900;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .btn-race { 
-            background: transparent;
-            color: var(--neon-pink);
-            border: 2px solid var(--neon-pink);
+        .btn-launch:hover { box-shadow: 0 0 20px var(--neon-blue); transform: scale(1.02); }
+
+        /* Игровая зона: Склад -> Трасса -> Компьютер */
+        .game-area {
+            display: grid;
+            grid-template-columns: 120px 1fr 120px;
+            gap: 10px;
+            align-items: stretch;
         }
 
-        button:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); }
-
-        /* Трасса будущего */
-        .track-zone {
+        .side-panel {
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed #334155;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 2rem;
+            padding: 20px 0;
         }
+
+        .side-label { font-size: 0.6rem; color: #475569; font-family: 'Orbitron'; text-transform: uppercase; }
+
+        .track-zone { display: flex; flex-direction: column; gap: 15px; }
 
         .lane {
-            background: rgba(0,0,0,0.8);
-            height: 90px;
-            border-radius: 15px;
+            background: linear-gradient(90deg, #0f172a 0%, #020617 100%);
+            height: 80px;
+            border-radius: 10px;
             position: relative;
-            border: 1px solid #333;
-            overflow: hidden;
+            border: 1px solid #1e293b;
             display: flex;
             align-items: center;
+            overflow: hidden;
         }
 
-        .lane-label {
-            position: absolute;
-            top: 5px;
-            left: 15px;
-            font-size: 0.8rem;
-            color: #666;
-            z-index: 1;
-        }
-
-        /* Эффект движения дороги */
-        .road-anim {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: repeating-linear-gradient(90deg, var(--neon-blue) 0, var(--neon-blue) 20px, transparent 20px, transparent 60px);
-            bottom: 15px;
-            opacity: 0.2;
-        }
-
-        .moving .road-anim { animation: moveRoad 0.5s linear infinite; }
-        @keyframes moveRoad { from { background-position: 0; } to { background-position: -60px; } }
-
+        /* Разворачиваем иконки! */
         .truck-unit {
             position: absolute;
-            left: 10px;
-            font-size: 50px;
+            left: 0;
+            font-size: 45px;
             transition: left 0.1s linear;
             z-index: 10;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
-        }
-
-        .speed-flame {
-            position: absolute;
-            right: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 20px;
-            background: linear-gradient(-90deg, var(--neon-pink), transparent);
-            border-radius: 50%;
-            display: none;
-        }
-
-        .moving .speed-flame { display: block; opacity: 0.6; }
-
-        /* Статистика / HUD */
-        .hud {
-            margin-top: 30px;
+            /* ВОТ ТУТ ПЕРЕВОРОТ */
+            transform: scaleX(-1); 
             display: flex;
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .hud-card {
-            flex: 1;
-            background: #111;
-            border-bottom: 4px solid var(--neon-blue);
-            padding: 20px;
+        .moving .truck-unit {
+            filter: drop-shadow(0 0 15px var(--neon-blue));
+        }
+
+        .road-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 100%;
+        }
+
+        .moving .road-marks { animation: travel 0.5s linear infinite; }
+        @keyframes travel { from { background-position: 0; } to { background-position: -50px; } }
+
+        /* HUD блоки снизу */
+        .hud-grid {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .hud-box {
+            background: #000;
+            border: 1px solid #1e293b;
+            padding: 15px;
             border-radius: 10px;
-            text-align: center;
+            position: relative;
         }
 
-        .hud-val { font-family: 'Orbitron'; font-size: 2rem; color: var(--neon-green); display: block; }
-        .hud-label { color: #666; font-size: 0.8rem; text-transform: uppercase; }
-
-        /* Всплывающее уведомление */
-        #achievement {
-            position: fixed;
-            top: 20px;
-            right: -300px;
-            background: var(--neon-green);
-            color: #000;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: 0.5s;
-            z-index: 100;
+        .hud-box::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--neon-pink);
         }
+
+        .hud-val { display: block; font-size: 1.5rem; font-family: 'Orbitron'; color: var(--neon-green); }
+        .hud-desc { font-size: 0.7rem; color: #475569; text-transform: uppercase; }
+
     </style>
 </head>
 <body>
 
-<div id="achievement">🏆 ДОСТИЖЕНИЕ: СВЕРХЗВУК!</div>
-
 <div class="main-ui">
     <header>
-        <h1>Data Transmit</h1>
+        <h1>DATA TRANSPORT v3.0</h1>
     </header>
 
     <div class="cockpit">
         <div class="control-slot">
-            <label>Груз (Size)</label>
+            <label>Cargo Type</label>
             <select id="cargo">
-                <option value="20">💿 MP3 ТРЕК (20 МБ)</option>
-                <option value="200">🎥 HD ВИДЕО (200 МБ)</option>
-                <option value="2000">🎮 CYBERPUNK 2077 (2 ГБ)</option>
-                <option value="10000">💾 АРХИВ NASA (10 ГБ)</option>
+                <option value="50">📀 HD PHOTO (50 MB)</option>
+                <option value="500">🎞️ 4K MOVIE (500 MB)</option>
+                <option value="2500">🎮 STEAM GAME (2.5 GB)</option>
+                <option value="10000">🏦 DATABASE (10 GB)</option>
             </select>
         </div>
-
         <div class="control-slot">
-            <label>Протокол (Speed)</label>
-            <select id="protocol">
-                <option value="5">GPRS / 3G (5 МБ/с)</option>
-                <option value="60" selected>LTE / 4G (60 МБ/с)</option>
-                <option value="500">5G SATELLITE (500 МБ/с)</option>
-                <option value="2000">QUANTUM LINK (2 ГБ/с)</option>
+            <label>Network Node</label>
+            <select id="speed">
+                <option value="10">ANTENNA 3G (10 MB/s)</option>
+                <option value="100" selected>CELLULAR 4G (100 MB/s)</option>
+                <option value="600">SATELLITE 5G (600 MB/s)</option>
+                <option value="2500">QUANTUM FIBER (2.5 GB/s)</option>
             </select>
         </div>
-
         <div class="control-slot">
-            <label>Помехи (Ping)</label>
-            <select id="interference">
-                <option value="1">ЧИСТЫЙ КАНАЛ (0ms)</option>
-                <option value="0.5">СРЕДНИЙ ШУМ (150ms)</option>
-                <option value="0.1">МЕТЕОРИТНЫЙ ДОЖДЬ (900ms)</option>
+            <label>Interference</label>
+            <select id="quality">
+                <option value="1">STABLE (100%)</option>
+                <option value="0.5">UNSTABLE (50%)</option>
+                <option value="0.1">CRITICAL (10%)</option>
             </select>
         </div>
-
-        <div class="action-btns">
-            <button class="btn-launch" onclick="launchSingle()">Старт</button>
-            <button class="btn-race" onclick="launchRace()">Гонка</button>
+        <div class="control-slot" style="justify-content: flex-end;">
+            <button class="btn-launch" onclick="startTest(false)">INITIATE SINGLE</button>
+        </div>
+        <div class="control-slot" style="justify-content: flex-end;">
+            <button class="btn-launch" style="background: var(--neon-pink); color: white;" onclick="startTest(true)">DATA RACE</button>
         </div>
     </div>
 
-    <div class="track-zone" id="track-zone">
+    <div class="game-area">
+        <div class="side-panel">
+            <span class="side-label">Source</span>
+            📦 💾 📂
         </div>
 
-    <div class="hud">
-        <div class="hud-card">
-            <span class="hud-val" id="hud-speed">0</span>
-            <span class="hud-label">Текущая скорость (МБ/с)</span>
+        <div class="track-zone" id="track-zone">
+            </div>
+
+        <div class="side-panel" style="border-color: var(--neon-green);">
+            <span class="side-label" style="color: var(--neon-green);">Target</span>
+            🖥️ 📱 🛰️
         </div>
-        <div class="hud-card" style="border-color: var(--neon-pink);">
-            <span class="hud-val" id="hud-time">0.0</span>
-            <span class="hud-label">Таймер передачи (сек)</span>
+    </div>
+
+    <div class="hud-grid">
+        <div class="hud-box">
+            <span class="hud-desc">Active Link Speed</span>
+            <span class="hud-val" id="hud-v">0 MB/s</span>
+        </div>
+        <div class="hud-box" style="border-color: var(--neon-blue);">
+            <span class="hud-desc">Transfer Timer</span>
+            <span class="hud-val" id="hud-t">0.00s</span>
+        </div>
+        <div class="hud-box" style="border-color: var(--neon-pink);">
+            <span class="hud-desc">Packets Delivered</span>
+            <span class="hud-val" id="hud-p">0%</span>
         </div>
     </div>
 </div>
 
 <script>
     const zone = document.getElementById('track-zone');
-    const emojis = { '5': '🚜', '60': '🚚', '500': '🏎️', '2000': '🚀' };
-    let activeTimers = [];
+    const icons = { '10': '🚜', '100': '🚚', '600': '🏎️', '2500': '🚀' };
+    let timers = [];
 
-    function createLane(id, name, speed, quality) {
+    function startTest(isRace) {
+        timers.forEach(clearInterval);
+        zone.innerHTML = '';
+        
+        const cargo = parseFloat(document.getElementById('cargo').value);
+        const quality = parseFloat(document.getElementById('quality').value);
+
+        if (isRace) {
+            const opts = document.getElementById('speed').options;
+            for(let i=0; i<opts.length; i++) {
+                addTrack(i, opts[i].text, parseFloat(opts[i].value), cargo, quality, false);
+            }
+        } else {
+            const s = document.getElementById('speed');
+            addTrack(0, s.options[s.selectedIndex].text, parseFloat(s.value), cargo, quality, true);
+        }
+    }
+
+    function addTrack(id, name, speed, cargo, quality, updateHud) {
         const lane = document.createElement('div');
         lane.className = 'lane';
         lane.id = `lane-${id}`;
         lane.innerHTML = `
-            <div class="lane-label">${name} | СТАБИЛЬНОСТЬ: ${quality*100}%</div>
-            <div class="road-anim"></div>
-            <div class="truck-unit" id="truck-${id}">
-                <div class="speed-flame"></div>
-                ${emojis[speed] || '🚚'}
-            </div>
+            <div style="position:absolute; top:2px; left:10px; font-size:0.6rem; color:#475569; z-index:5">${name}</div>
+            <div class="road-marks"></div>
+            <div class="truck-unit" id="truck-${id}">${icons[speed] || '🚚'}</div>
         `;
-        return lane;
-    }
-
-    function launchSingle() {
-        resetAll();
-        const cargo = parseFloat(document.getElementById('cargo').value);
-        const speed = parseFloat(document.getElementById('protocol').value);
-        const quality = parseFloat(document.getElementById('interference').value);
-        const name = document.getElementById('protocol').options[document.getElementById('protocol').selectedIndex].text;
-
-        zone.appendChild(createLane(0, name, speed, quality));
-        runEngine(0, speed, cargo, quality, true);
-    }
-
-    function launchRace() {
-        resetAll();
-        const cargo = parseFloat(document.getElementById('cargo').value);
-        const quality = parseFloat(document.getElementById('interference').value);
-        const opts = document.getElementById('protocol').options;
-
-        for (let i = 0; i < opts.length; i++) {
-            const speed = parseFloat(opts[i].value);
-            zone.appendChild(createLane(i, opts[i].text, speed, quality));
-            runEngine(i, speed, cargo, quality, false);
-        }
-    }
-
-    function runEngine(id, speed, cargo, quality, updateHud) {
-        const truck = document.getElementById(`truck-${id}`);
-        const lane = document.getElementById(`lane-${id}`);
-        lane.classList.add('moving');
-
-        let delivered = 0;
-        const startTime = Date.now();
-        const realSpeed = speed * quality;
+        zone.appendChild(lane);
         
-        // Проверка на ачивку
-        if (realSpeed >= 1000) showAchievement();
+        const truck = document.getElementById(`truck-${id}`);
+        lane.classList.add('moving');
+        
+        let progress = 0;
+        let delivered = 0;
+        const start = Date.now();
+        const vReal = speed * quality;
 
-        const interval = setInterval(() => {
-            // Имитация микро-задержек (джиттер)
-            const jitter = 0.9 + Math.random() * 0.2;
-            delivered += (realSpeed * jitter) / 10;
-            
-            let progress = (delivered / cargo) * 100;
-            if (progress >= 100) progress = 100;
+        const t = setInterval(() => {
+            delivered += vReal / 10;
+            progress = (delivered / cargo) * 100;
+            if (progress > 100) progress = 100;
 
-            const xPos = (progress * (lane.offsetWidth - 100)) / 100;
-            truck.style.left = xPos + 'px';
+            truck.style.left = `calc(${progress}% - 60px)`;
 
             if (updateHud) {
-                document.getElementById('hud-speed').innerText = Math.round(realSpeed * jitter);
-                document.getElementById('hud-time').innerText = ((Date.now() - startTime)/1000).toFixed(1);
+                document.getElementById('hud-v').innerText = Math.round(vReal) + ' MB/s';
+                document.getElementById('hud-t').innerText = ((Date.now()-start)/1000).toFixed(2) + 's';
+                document.getElementById('hud-p').innerText = Math.round(progress) + '%';
             }
 
             if (progress >= 100) {
-                clearInterval(interval);
+                clearInterval(t);
                 lane.classList.remove('moving');
-                truck.style.filter = 'drop-shadow(0 0 20px var(--neon-green))';
+                lane.style.borderColor = 'var(--neon-green)';
             }
         }, 100);
-        activeTimers.push(interval);
-    }
-
-    function resetAll() {
-        activeTimers.forEach(clearInterval);
-        zone.innerHTML = '';
-        document.getElementById('hud-speed').innerText = '0';
-        document.getElementById('hud-time').innerText = '0.0';
-    }
-
-    function showAchievement() {
-        const el = document.getElementById('achievement');
-        el.style.right = '20px';
-        setTimeout(() => el.style.right = '-350px', 3000);
+        timers.push(t);
     }
 </script>
 
