@@ -1,441 +1,310 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ресторан Бей Хай | 中餐馆 北海</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
-  <style>
-    /* Глобальные стили */
-    :root {
-      --color-primary: #8B0000; /* Темно-красный */
-      --color-secondary: #FFD700; /* Золотой */
-      --color-background: #121212; /* Почти черный */
-      --color-text: #E0E0E0; /* Светло-серый */
-      --color-highlight: #FF4500; /* Ярко-красный/Оранжевый */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATA TRUCK PRO — Вариационная Модель</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --accent: #f43f5e;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --success: #22c55e;
+        }
 
-    body {
-      margin: 0;
-      font-family: "Noto Sans", sans-serif;
-      background-color: var(--color-background);
-      color: var(--color-text);
-      scroll-behavior: smooth;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top, #1e1b4b, #0f172a);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    /* Хедер */
-    header {
-      background: linear-gradient(90deg, var(--color-primary), #A52A2A);
-      color: var(--color-secondary);
-      padding: 1.5em;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      border-bottom: 3px solid var(--color-secondary);
-    }
+        .container { max-width: 1000px; width: 100%; }
 
-    .lang-switch {
-      position: absolute;
-      top: 15px;
-      right: 50px;
-      background: var(--color-secondary);
-      color: var(--color-primary);
-      border: none;
-      border-radius: 20px;
-      padding: 8px 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.1s;
-    }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 4px; color: #fff; text-shadow: 0 0 20px rgba(99, 102, 241, 0.6); }
 
-    .lang-switch:hover {
-      background-color: #f0c500;
-      transform: scale(1.05);
-    }
+        /* Панель настроек */
+        .dashboard {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
 
-    /* Секции */
-    section {
-      padding: 4em 10%;
-      text-align: center;
-    }
+        .control-item { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.75rem; color: #818cf8; font-weight: 800; text-transform: uppercase; }
 
-    h1, h2 {
-      color: var(--color-secondary);
-      font-family: "Noto Serif", serif;
-      margin-bottom: 0.5em;
-    }
+        select {
+            background: #0f172a;
+            color: white;
+            border: 1px solid #334155;
+            padding: 12px;
+            border-radius: 12px;
+            outline: none;
+            transition: 0.3s;
+        }
+        select:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); }
 
-    h2 {
-      font-size: 2.2em;
-      border-bottom: 2px solid var(--color-secondary);
-      display: inline-block;
-      padding-bottom: 0.2em;
-    }
+        .btn-group { display: flex; gap: 10px; align-items: flex-end; }
+        button {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-start { background: var(--primary); color: white; flex: 2; }
+        .btn-start:hover { transform: scale(1.05); background: #4f46e5; }
+        .btn-race { background: var(--accent); color: white; flex: 1; }
+        .btn-race:hover { background: #e11d48; box-shadow: 0 0 20px rgba(244, 63, 94, 0.4); }
 
-    /* Герой-секция */
-    .hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('hero-bg.jpg') center/cover no-repeat;
-      color: #fff;
-      padding: 10em 2em;
-      text-shadow: 1px 1px 5px black;
-    }
+        /* Трассы */
+        #world { background: rgba(2, 6, 23, 0.6); padding: 25px; border-radius: 24px; border: 1px solid #1e293b; }
 
-    .hero h1 {
-      font-size: 3.5em;
-      margin-bottom: 0.2em;
-    }
+        .track-box { margin-bottom: 20px; position: relative; }
+        .track-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; font-weight: 500; }
 
-    .hero p {
-      font-size: 1.2em;
-    }
+        .road {
+            height: 70px;
+            background: #0f172a;
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border: 2px solid #334155;
+        }
 
-    /* Меню */
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3em;
-      margin-top: 3em;
-    }
+        /* Анимированная разметка */
+        .road::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 4px;
+            background: repeating-linear-gradient(90deg, #fff 0, #fff 20px, transparent 20px, transparent 40px);
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.1;
+        }
 
-    .menu-item {
-      background-color: rgba(139, 0, 0, 0.2);
-      border: 2px solid var(--color-secondary);
-      border-radius: 15px;
-      padding: 1.5em;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-align: left;
-    }
+        .road.moving::before { animation: dash 0.5s linear infinite; }
+        @keyframes dash { to { transform: translate(-40px, -50%); } }
 
-    .menu-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
-    }
+        .truck {
+            position: absolute;
+            left: 0;
+            width: 80px;
+            font-size: 45px;
+            display: flex;
+            justify-content: center;
+            z-index: 5;
+            cursor: pointer;
+            transition: left 0.1s linear, transform 0.2s;
+        }
+        .truck:hover { transform: scale(1.2) rotate(-5deg); filter: brightness(1.5); }
+        
+        .finish-line {
+            position: absolute;
+            right: 10px;
+            height: 80%;
+            width: 10px;
+            background: repeating-linear-gradient(0deg, #fff 0, #fff 10px, #000 10px, #000 20px);
+            border-radius: 2px;
+        }
 
-    .menu-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 1em;
-      border: 3px solid var(--color-highlight);
-    }
-
-    .menu-item h3 {
-      color: var(--color-secondary);
-      margin-top: 0;
-      font-size: 1.5em;
-      border-bottom: 1px dashed var(--color-secondary);
-      padding-bottom: 0.2em;
-    }
-
-    .menu-item p {
-      color: var(--color-text);
-      font-size: 0.95em;
-      margin-bottom: 1em;
-    }
-
-    .menu-item strong {
-      display: block;
-      color: var(--color-highlight);
-      font-size: 1.4em;
-      text-align: right;
-    }
-
-    /* Галерея */
-    .gallery-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5em;
-      margin-top: 2em;
-    }
-
-    img.gallery {
-      width: 100%;
-      max-width: 350px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 3px solid var(--color-secondary);
-      transition: transform 0.3s;
-    }
-
-    img.gallery:hover {
-      transform: scale(1.05);
-    }
-
-    /* Кнопка "Заказ" */
-    .order-button {
-      display: inline-block;
-      /* Убран верхний margin, т.к. кнопка теперь идет после блока контактов */
-      margin-top: 1.5em; 
-      margin-bottom: 1.5em;
-      padding: 15px 30px;
-      background-color: var(--color-highlight); /* Ярко-красный/Оранжевый */
-      color: white;
-      text-decoration: none;
-      font-size: 1.2em;
-      font-weight: bold;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
-      transition: background-color 0.3s, transform 0.1s;
-      border: 2px solid var(--color-secondary);
-      letter-spacing: 1px;
-    }
-
-    .order-button:hover {
-      background-color: #ff6347; /* Более светлый тон при наведении */
-      transform: translateY(-2px);
-    }
-
-
-    /* Контакты */
-    .contact-info {
-      font-size: 1.1em;
-      line-height: 1.8;
-      margin-top: 2em;
-      /* Убран нижний margin, чтобы кнопка была ближе */
-    }
-
-    iframe {
-      border: 3px solid var(--color-secondary);
-      border-radius: 12px;
-      width: 100%;
-      height: 450px;
-      margin-top: 2em;
-    }
-
-    /* Футер */
-    footer {
-      background: var(--color-primary);
-      color: var(--color-secondary);
-      text-align: center;
-      padding: 1.5em;
-      border-top: 3px solid var(--color-secondary);
-    }
-  </style>
+        /* Результаты */
+        .leaderboard {
+            margin-top: 20px;
+            background: var(--card);
+            padding: 15px;
+            border-radius: 15px;
+            display: none;
+        }
+        .leader-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #334155; }
+    </style>
 </head>
 <body>
-  <header>
-    <button class="lang-switch" onclick="switchLang()">中文</button>
-    <h1 id="title">Ресторан китайской кухни «Бей Хай»</h1>
-  </header>
 
-  <section class="hero">
-    <h1 id="hero-title">Добро пожаловать в «Бей Хай»</h1>
-    <p id="hero-text">Погрузитесь в атмосферу Поднебесной — изысканная кухня, теплый прием и вкус настоящего Китая.</p>
-  </section>
+<div class="container">
+    <header>
+        <h1>Data Truck Pro</h1>
+        <p style="color: #94a3b8">Курсовой проект: Вариационная модель передачи данных</p>
+    </header>
 
-  <section id="about">
-    <h2 id="about-title">О ресторане</h2>
-    <p id="about-text">
-      «Бей Хай» — это не просто ресторан, это путешествие в мир аутентичной китайской кухни. Наши повара — мастера из провинции Гуандун, которые готовят по традиционным рецептам, используя только свежие ингредиенты. У нас вы найдете идеальный баланс ароматов, текстур и эстетики в каждом блюде. Идеальное место для семейного ужина, деловой встречи или романтического вечера.
-    </p>
-  </section>
+    <div class="dashboard">
+        <div class="control-item">
+            <label>Груз (Данные)</label>
+            <select id="cargoSize">
+                <option value="10">🎵 Альбом (10 МБ)</option>
+                <option value="100">🎬 Клип (100 МБ)</option>
+                <option value="1000">📦 Пакет игр (1 ГБ)</option>
+                <option value="5000">🌌 База данных (5 ГБ)</option>
+            </select>
+        </div>
 
-    <section id="menu">
-    <h2 id="menu-title">Меню</h2>
+        <div class="control-item">
+            <label>Тип соединения</label>
+            <select id="connType">
+                <option value="2">Slow 3G (2 МБ/с)</option>
+                <option value="50" selected>Standard 4G (50 МБ/с)</option>
+                <option value="400">Ultra 5G (400 МБ/с)</option>
+                <option value="1200">Optical Wi-Fi (1.2 ГБ/с)</option>
+            </select>
+        </div>
 
-    <div class="menu">
-      <div class="menu-item">
-        <img src="https://avatars.mds.yandex.net/get-eda/3525661/df8f6ff99603a394cfd39dbf0b482429/1440x1082" alt="Утка по-пекински" />
-        <h3 id="dish1">Утка по-пекински</h3>
-        <p id="dish1-desc">Классика китайской кухни: хрустящая кожа, мягкое мясо, подается с тонкими блинчиками, зеленым луком и соусом хойсин.</p>
-        <strong id="dish1-price">₽1,950</strong>
-      </div>
+        <div class="control-item">
+            <label>Среда передачи</label>
+            <select id="roadQuality">
+                <option value="1">Пустая трасса (100%)</option>
+                <option value="0.6">Городской трафик (-40%)</option>
+                <option value="0.2">Час пик / Гроза (-80%)</option>
+            </select>
+        </div>
 
-      <div class="menu-item">
-        <img src="https://chjun-go.ru/upload/iblock/021/ddqwdf69fa2o68btaw6532b3vmphreqi.jpg" alt="Рыба в кисло-сладком соусе" />
-        <h3 id="dish2">Рыба в кисло-сладком соусе (松鼠桂鱼)</h3>
-        <p id="dish2-desc">Традиционное блюдо провинции Аньхой: филе рыбы, обжаренное до хрустящей корочки, политое густым кисло-сладким соусом.</p>
-        <strong id="dish2-price">₽1,400</strong>
-      </div>
-
-      <div class="menu-item">
-        <img src="https://avatars.mds.yandex.net/get-vertis-journal/4220003/2bfc67a9-fcc5-4ff0-a717-d75ba6013f36.jpeg/1600x1600" alt="Димсамы" />
-        <h3 id="dish3">Димсамы ассорти (点心)</h3>
-        <p id="dish3-desc">Набор паровых пельменей и булочек с разнообразными начинками: креветками, свининой, овощами. Идеальная закуска.</p>
-        <strong id="dish3-price">₽750</strong>
-      </div>
-
-      <div class="menu-item">
-        <img src="https://i.pinimg.com/originals/60/28/f5/6028f58608344db6b31e4bb9fe704ab9.jpg" alt="Курица Кунг Пао" />
-        <h3 id="dish4">Курица Кунг Пао (宫保鸡丁)</h3>
-        <p id="dish4-desc">Знаменитое сычуаньское блюдо: нежное куриное филе, арахис, овощи и пикантный соус с чили-перцем.</p>
-        <strong id="dish4-price">₽890</strong>
-      </div>
-
-      <div class="menu-item">
-        <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_6727cb77edab5921b02f604e_6727cdaf75f1157eb15b520a/scale_1200" alt="Жареная лапша" />
-        <h3 id="dish5">Жареная лапша Чао Мянь (炒面)</h3>
-        <p id="dish5-desc">Классическая жареная лапша с говядиной, ростками фасоли, грибами и специальным темным соусом.</p>
-        <strong id="dish5-price">₽680</strong>
-      </div>
-      
-      <div class="menu-item">
-        <img src="https://i.ytimg.com/vi/Y1cn_Mfpzk4/maxresdefault.jpg" alt="Говядина с брокколи" />
-        <h3 id="dish6">Говядина с брокколи в устричном соусе</h3>
-        <p id="dish6-desc">Сочная говядина, свежая брокколи и насыщенный устричный соус. Идеально с рисом.</p>
-        <strong id="dish6-price">₽950</strong>
-      </div>
-
-      <div class="menu-item">
-        <img src="https://static.insales-cdn.com/files/1/7185/37461009/original/mceu_80881733611733659024630-1733659024656.jpg" alt="Мапо Тофу" />
-        <h3 id="dish7">Мапо Тофу (麻婆豆腐)</h3>
-        <p id="dish7-desc">Острое сычуаньское блюдо: мягкий тофу и фарш, тушеные в пикантном соусе с добавлением сычуаньского перца.</p>
-        <strong id="dish7-price">₽720</strong>
-      </div>
-
-      <div class="menu-item">
-        <img src="https://avatars.mds.yandex.net/i?id=f76ad433f05eabf3d62edd9381614656_l-9240324-images-thumbs&n=13" alt="Жареный рис Янгчжоу" />
-        <h3 id="dish8">Жареный рис Янгчжоу (扬州炒饭)</h3>
-        <p id="dish8-desc">Классика кантонской кухни: рис, жаренный с креветками, ветчиной, курицей и свежими овощами.</p>
-        <strong id="dish8-price">₽650</strong>
-      </div>
+        <div class="btn-group">
+            <button class="btn-start" onclick="runOne()">Запуск</button>
+            <button class="btn-race" onclick="runRace()">Гонка</button>
+        </div>
     </div>
-  </section>
 
-  <section id="gallery">
-    <h2 id="gallery-title">Галерея</h2>
-    <div class="gallery-container">
-      <img class="gallery" src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d4b68e123882211.60f8118d88df1.jpg" alt="Уютный интерьер ресторана с китайским декором" />
-      <img class="gallery" src="https://i.pinimg.com/originals/ea/9c/66/ea9c6633d9b9d789a004531d5b719664.jpg" alt="Общий зал ресторана" />
-      <img class="gallery" src="https://i.pinimg.com/736x/ca/3c/b7/ca3cb75c24b49922f9471c35d0c5047b.jpg" alt="Изысканное блюдо на китайском столе" />
-      <img class="gallery" src="https://i.pinimg.com/736x/ec/6c/7a/ec6c7a70369e62208574703427748ba1.jpg" alt="Вход в ресторан с фонариками" />
-    </div>
-  </section>
+    <div id="world"></div>
+    <div id="leaderboard" class="leaderboard"></div>
+</div>
 
-  <section id="contact">
-    <h2 id="contact-title">Контакты</h2>
+<script>
+    const world = document.getElementById('world');
+    const board = document.getElementById('leaderboard');
+    const truckIcons = { '2': '🚜', '50': '🚚', '400': '🏎️', '1200': '🚀' };
+    let timers = [];
+    let results = [];
 
-    <div class="contact-info" id="contact-text">
-      <p>г. Большой Камень, ул. Приморского Комсомола, 2</p>
-      <p>📞 **+7 (42335) 5-55-55**</p>
-      <p>✉️ <a href="mailto:beihai.resto@email.ru" style="color: var(--color-secondary);">beihai.resto@email.ru</a></p>
-      <p>🕒 Ежедневно **12:00–23:00**</p>
-    </div>
-    
-    <a href="https://bei-pnkbjgph3-lordnebes228s-projects.vercel.app" target="_blank" class="order-button" id="order-button-text">
-        Онлайн-заказ и бронирование
-    </a>
-
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1197.6477176159515!2d132.3299719363842!3d43.1114002674488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5fb7b80a6519142f%3A0x6b4c107e0c476317!2z0KHQuNC80YIg0JHQsNGA0LAg0JrQuNC10YDQsA!5e0!3m2!1sru!2sru!4v1703648400000!5m2!1sru!2sru"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </section>
-
-  <footer>
-    <p>© 2025 Ресторан «Бей Хай» | 北海餐厅. Все права защищены.</p>
-  </footer>
-
-  <script>
-    let currentLang = "ru";
-
-    const translations = {
-        ru: {
-            switch: "中文",
-            title: "Ресторан китайской кухни «Бей Хай»",
-            heroTitle: "Добро пожаловать в «Бей Хай»",
-            heroText: "Погрузитесь в атмосферу Поднебесной — изысканная кухня, теплый прием и вкус настоящего Китая.",
-            aboutTitle: "О ресторане",
-            aboutText: "«Бей Хай» — это не просто ресторан, это путешествие в мир аутентичной китайской кухни. Наши повара — мастера из провинции Гуандун, которые готовят по традиционным рецептам, используя только свежие ингредиенты. У нас вы найдете идеальный баланс ароматов, текстур и эстетики в каждом блюде. Идеальное место для семейного ужина, деловой встречи или романтического вечера.",
-            menuTitle: "Меню",
-            orderButton: "Онлайн-заказ и бронирование",
-            
-            // Обновленные данные меню
-            dish1: "Утка по-пекински",
-            dish2: "Рыба в кисло-сладком соусе (松鼠桂鱼)",
-            dish3: "Димсамы с креветками (点心)",
-            dish4: "Суп Вонтон",
-            dish5: "Свинина в кисло-сладком",
-            dish6: "Говядина с брокколи в устричном соусе",
-            dish7: "Мапо Тофу (麻婆豆腐)",
-            dish8: "Жареный рис Янгчжоу (扬州炒饭)",
-            
-            dish1Desc: "Классика императорской кухни. Ароматная утка с идеально хрустящей карамельной кожей. Подается с тонкими блинчиками, зеленым луком и соусом Хойсин.",
-            dish2Desc: "Традиционное блюдо провинции Аньхой: филе рыбы, обжаренное до хрустящей корочки, политое густым кисло-сладким соусом.",
-            dish3Desc: "Нежная паровая закуска. Тонкое рисовое тесто с сочной начинкой из свежих креветок. Идеально для начала трапезы.",
-            dish4Desc: "Легкий и согревающий. Прозрачный куриный бульон с традиционными китайскими пельмешками Вонтон, наполненными свининой и зеленью.",
-            dish5Desc: "Сочетание классических вкусов. Обжаренные кусочки нежной свинины в ярком, густом кисло-сладком соусе с добавлением ананасов и перца.",
-            dish6Desc: "Сочная говядина, свежая брокколи и насыщенный устричный соус. Идеально с рисом.",
-            dish7Desc: "Острое сычуаньское блюдо: мягкий тофу и фарш, тушеные в пикантном соусе с добавлением сычуаньского перца.",
-            dish8Desc: "Классика кантонской кухни: рис, жаренный с креветками, ветчиной, курицей и свежими овощами.",
-            
-            galleryTitle: "Галерея",
-            contactTitle: "Контакты",
-            contactText: "г. Большой Камень, ул. Приморского Комсомола, 2<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 Ежедневно **12:00–23:00**",
-            footer: "© 2025 Ресторан «Бей Хай» | 北海餐厅. Все права защищены."
-        },
-        cn: {
-            switch: "Русский",
-            title: "中餐馆 北海",
-            heroTitle: "欢迎来到北海餐厅",
-            heroText: "沉浸在中国的味道与文化中——精致菜肴，热情招待，地道风味。",
-            aboutTitle: "关于我们",
-            aboutText: "北海餐厅不仅仅是一家餐馆，它是一场通往地道中国美食世界的旅程。我们的主厨来自广东省，他们采用传统食谱和新鲜食材烹饪，为您带来完美的味道、口感和美感平衡。这里是家庭聚餐、商务会谈或浪漫夜晚的理想场所。",
-            menuTitle: "菜单",
-            orderButton: "在线订购和预订",
-
-            // Обновленные данные меню
-            dish1: "北京烤鸭",
-            dish2: "松鼠桂鱼",
-            dish3: "虾仁点心",
-            dish4: "馄饨汤",
-            dish5: "糖醋猪肉",
-            dish6: "蚝油西蓝花炒牛肉",
-            dish7: "麻婆豆腐",
-            dish8: "扬州炒饭",
-            
-            dish1Desc: "经典宫廷美食。香气浓郁，酥脆的焦糖皮。搭配薄饼、葱丝和海鲜酱。",
-            dish2Desc: "安徽传统名菜：鱼片炸至酥脆，浇上浓郁的糖醋汁。",
-            dish3Desc: "嫩滑的蒸点。薄薄的米皮包裹着鲜虾馅料。是完美的第一道菜。",
-            dish4Desc: "清淡暖胃。清澈的鸡汤配上传统的中式馄饨（猪肉和蔬菜馅）。",
-            dish5Desc: "经典的口味组合。嫩猪肉片炒制，配上浓郁酸甜的酱汁、菠萝和辣椒。",
-            dish6Desc: "鲜嫩的牛肉、新鲜的西兰花和浓郁的蚝油。配米饭绝佳。",
-            dish7Desc: "麻辣川菜：嫩豆腐和肉末，用花椒麻辣酱炖制。",
-            dish8Desc: "经典粤菜：米饭与虾仁、火腿、鸡肉和新鲜蔬菜同炒。",
-            
-            galleryTitle: "画廊",
-            contactTitle: "联系我们",
-            contactText: "滨海市 共青团大街2号<br>📞 **+7 (42335) 5-55-55**<br>✉️ <a href='mailto:beihai.resto@email.ru' style='color: var(--color-secondary);'>beihai.resto@email.ru</a><br>🕒 每天 **12:00–23:00**",
-            footer: "© 2025 北海餐厅. 版权所有。"
-        }
-    };
-
-    function switchLang() {
-        currentLang = currentLang === "ru" ? "cn" : "ru";
-        const langData = translations[currentLang];
-
-        document.querySelector(".lang-switch").textContent = langData.switch;
-        document.getElementById("title").textContent = langData.title;
-        document.getElementById("hero-title").textContent = langData.heroTitle;
-        document.getElementById("hero-text").textContent = langData.heroText;
-        document.getElementById("about-title").textContent = langData.aboutTitle;
-        document.getElementById("about-text").textContent = langData.aboutText;
-        document.getElementById("menu-title").textContent = langData.menuTitle;
-        
-        // Перевод кнопки заказа
-        document.getElementById("order-button-text").textContent = langData.orderButton;
-
-        // Перевод блюд
-        for (let i = 1; i <= 8; i++) {
-            document.getElementById(`dish${i}`).textContent = langData[`dish${i}`];
-            document.getElementById(`dish${i}-desc`).textContent = langData[`dish${i}Desc`];
-        }
-
-        document.getElementById("gallery-title").textContent = langData.galleryTitle;
-        document.getElementById("contact-title").textContent = langData.contactTitle;
-        document.getElementById("contact-text").innerHTML = langData.contactText;
-        document.querySelector("footer p").textContent = langData.footer;
-
-        document.documentElement.lang = currentLang;
+    // Звуковой движок (Web Audio API)
+    function playSound(freq, type, duration) {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
     }
-  </script>
+
+    function createTrack(id, label, speed, cargo, quality) {
+        const div = document.createElement('div');
+        div.className = 'track-box';
+        div.innerHTML = `
+            <div class="track-meta">
+                <span>${label}</span>
+                <span id="speed-val-${id}">${(speed * quality).toFixed(1)} МБ/с</span>
+            </div>
+            <div class="road" id="road-${id}">
+                <div class="finish-line"></div>
+                <div class="truck" id="truck-${id}" title="Нитро!">
+                    ${truckIcons[speed] || '🚚'}
+                </div>
+            </div>
+        `;
+        return div;
+    }
+
+    function runOne() {
+        reset();
+        const s = document.getElementById('connType');
+        const speed = parseFloat(s.value);
+        const name = s.options[s.selectedIndex].text;
+        const cargo = parseFloat(document.getElementById('cargoSize').value);
+        const quality = parseFloat(document.getElementById('roadQuality').value);
+
+        world.appendChild(createTrack(0, name, speed, cargo, quality));
+        startLogic(0, name, speed, cargo, quality);
+    }
+
+    function runRace() {
+        reset();
+        const cargo = parseFloat(document.getElementById('cargoSize').value);
+        const quality = parseFloat(document.getElementById('roadQuality').value);
+        const opts = document.getElementById('connType').options;
+
+        for (let i = 0; i < opts.length; i++) {
+            const speed = parseFloat(opts[i].value);
+            world.appendChild(createTrack(i, opts[i].text, speed, cargo, quality));
+            startLogic(i, opts[i].text, speed, cargo, quality);
+        }
+    }
+
+    function startLogic(id, name, speed, cargo, quality) {
+        const truck = document.getElementById(`truck-${id}`);
+        const road = document.getElementById(`road-${id}`);
+        road.classList.add('moving');
+        playSound(200 + speed/2, 'sawtooth', 0.5);
+
+        let loaded = 0;
+        let nitro = 1;
+        const startTime = Date.now();
+
+        // Фишка: Клик по грузовику дает ускорение (Нитро)
+        truck.onclick = () => { 
+            nitro = 2; 
+            truck.style.filter = 'drop-shadow(0 0 10px #f43f5e)';
+            playSound(800, 'square', 0.1);
+            setTimeout(() => { nitro = 1; truck.style.filter = 'none'; }, 1000);
+        };
+
+        const t = setInterval(() => {
+            loaded += (speed * quality * nitro) / 10;
+            let p = (loaded / cargo) * 100;
+            if (p > 100) p = 100;
+
+            truck.style.left = `calc(${p}% - 80px)`;
+
+            if (p >= 100) {
+                clearInterval(t);
+                road.classList.remove('moving');
+                const time = ((Date.now() - startTime)/1000).toFixed(2);
+                results.push({name, time});
+                updateBoard();
+                playSound(600, 'sine', 0.3);
+            }
+        }, 100);
+        timers.push(t);
+    }
+
+    function reset() {
+        timers.forEach(clearInterval);
+        world.innerHTML = '';
+        board.innerHTML = '<h3>Результаты заезда:</h3>';
+        board.style.display = 'none';
+        results = [];
+    }
+
+    function updateBoard() {
+        board.style.display = 'block';
+        results.sort((a,b) => a.time - b.time);
+        board.innerHTML = '<h3>🏆 Таблица лидеров:</h3>';
+        results.forEach((r, i) => {
+            board.innerHTML += `<div class="leader-item"><span>${i+1}. ${r.name}</span> <b>${r.time} сек</b></div>`;
+        });
+    }
+</script>
 </body>
 </html>
-
