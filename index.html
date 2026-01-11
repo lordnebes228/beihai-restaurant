@@ -2,15 +2,16 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DATA WARS: MEGA EDITION</title>
+    <title>БИТВА ДАННЫХ: MEGA EDITION</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Exo+2:wght@400;700&display=swap');
 
         :root {
             --neon-blue: #00f2ff;
             --neon-pink: #ff00ff;
             --neon-green: #00ff9d;
             --bg-dark: #020617;
+            --panel: rgba(15, 23, 42, 0.9);
         }
 
         body {
@@ -18,208 +19,305 @@
             color: white;
             font-family: 'Exo 2', sans-serif;
             margin: 0;
-            padding: 20px;
+            overflow-x: hidden;
             min-height: 100vh;
             background-image: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%);
         }
 
-        .main-ui { max-width: 1400px; margin: 0 auto; }
+        .main-ui { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* XP Бар */
+        .top-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; background: rgba(0,0,0,0.5); padding: 10px 25px;
+            border-radius: 50px; border: 1px solid var(--neon-blue);
+        }
+        .xp-container { flex-grow: 1; margin: 0 20px; background: #000; height: 12px; border-radius: 6px; overflow: hidden; }
+        #xp-bar { width: 0%; height: 100%; background: var(--neon-green); transition: 0.5s; box-shadow: 0 0 10px var(--neon-green); }
 
         header h1 {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; text-align: center; font-size: 3.5rem;
+            letter-spacing: 5px; margin: 10px 0;
+            background: linear-gradient(to right, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Подсказки */
+        .hint {
+            display: inline-block;
+            width: 18px; height: 18px;
+            background: var(--neon-blue);
+            color: #000;
+            border-radius: 50%;
             text-align: center;
-            font-size: 4rem; /* Огромный заголовок */
-            margin: 20px 0;
-            text-shadow: 0 0 20px var(--neon-blue);
+            font-size: 12px;
+            line-height: 18px;
+            cursor: help;
+            margin-left: 5px;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+        .hint:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            background: #1e293b;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--neon-blue);
+            width: 250px;
+            z-index: 100;
+            font-size: 0.8rem;
+            text-transform: none;
+            margin-top: 25px;
+            margin-left: -125px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        /* Увеличенная панель управления */
+        /* Панель управления */
         .cockpit {
-            background: rgba(15, 23, 42, 0.9);
-            border: 3px solid var(--neon-blue);
-            border-radius: 30px;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            background: var(--panel); border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 20px; padding: 25px; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+            backdrop-filter: blur(10px); margin-bottom: 25px;
         }
 
-        .control-slot { display: flex; flex-direction: column; gap: 15px; }
-        label { color: var(--neon-blue); font-size: 1.2rem; font-family: 'Orbitron'; text-transform: uppercase; }
+        .control-slot { display: flex; flex-direction: column; gap: 8px; position: relative; }
+        label { color: var(--neon-blue); text-transform: uppercase; font-size: 0.8rem; font-family: 'Orbitron'; font-weight: bold; }
 
         select {
-            background: #000; color: #fff; border: 2px solid #334155;
-            padding: 20px; border-radius: 15px; font-size: 1.5rem; font-weight: bold;
+            background: #000; color: #fff; border: 1px solid #334155;
+            padding: 12px; border-radius: 8px; font-family: 'Exo 2'; font-size: 1.1rem; font-weight: bold;
         }
 
         .btn-launch { 
-            height: 100%;
-            font-size: 1.5rem; background: var(--neon-blue); color: #000; 
-            font-family: 'Orbitron'; font-weight: 900; border: none; 
-            border-radius: 15px; cursor: pointer; transition: 0.3s;
+            background: var(--neon-blue); color: #000; font-family: 'Orbitron'; font-weight: 900;
+            border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
-        .btn-launch:hover { transform: scale(1.05); filter: brightness(1.2); box-shadow: 0 0 30px var(--neon-blue); }
+        .btn-launch:hover { box-shadow: 0 0 20px var(--neon-blue); transform: translateY(-2px); }
 
-        /* Познавательный блок */
-        .insight-panel {
-            background: rgba(0, 242, 255, 0.1); border-left: 10px solid var(--neon-blue);
-            padding: 25px; border-radius: 15px; margin-bottom: 30px; font-size: 1.4rem;
+        .info-fact {
+            background: rgba(0, 242, 255, 0.1); border: 1px solid var(--neon-blue);
+            padding: 15px; border-radius: 12px; margin-bottom: 25px;
+            font-size: 1.1rem; line-height: 1.4; color: #e2e8f0;
         }
 
-        /* Трассы */
+        /* Игровая зона */
+        .game-area { display: grid; grid-template-columns: 100px 1fr 100px; gap: 15px; }
+        .side-panel {
+            background: rgba(255,255,255,0.03); border-radius: 15px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 3.5rem;
+        }
+
+        .track-zone { display: flex; flex-direction: column; gap: 20px; }
         .lane {
-            background: rgba(0,0,0,0.7); height: 160px; /* Увеличенная высота */
-            border-radius: 25px; position: relative; border: 2px solid #1e293b;
-            margin-bottom: 25px; display: flex; align-items: center; overflow: hidden;
+            background: rgba(0,0,0,0.6); height: 140px; border-radius: 15px;
+            position: relative; border: 1px solid #1e293b; display: flex; align-items: center; overflow: hidden;
         }
 
         .truck-unit {
-            position: absolute; left: 0; font-size: 110px; /* Гигантские иконки */
-            transition: left 0.1s linear; z-index: 10;
-            transform: scaleX(-1); /* ВСЕ развернуты направо */
+            position: absolute; left: 0; font-size: 90px; transition: left 0.1s linear; z-index: 10;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* Разметка дороги */
+        /* ПРАВИЛЬНЫЙ РАЗВОРОТ: Ракета летит вперед, остальные тоже */
+        .truck-unit.reverse { transform: scaleX(-1); }
+        .truck-unit.rocket-fix { transform: rotate(0deg); }
+
         .road-marks {
             position: absolute; width: 100%; height: 100%;
-            background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 4px, transparent 4px);
-            background-size: 80px 100%;
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px);
+            background-size: 60px 100%;
         }
         .moving .road-marks { animation: travel 0.2s linear infinite; }
-        @keyframes travel { from { background-position: 0; } to { background-position: -80px; } }
-
-        /* Эффект помех (Noise) */
-        .noise-overlay {
-            position: absolute; width: 100%; height: 100%;
-            background: rgba(255, 0, 0, 0.1); opacity: 0; pointer-events: none;
-        }
-        .unstable .noise-overlay { animation: flicker 0.5s infinite; opacity: 1; }
-        @keyframes flicker { 0% { opacity: 0; } 50% { opacity: 0.3; } 100% { opacity: 0; } }
+        @keyframes travel { from { background-position: 0; } to { background-position: -60px; } }
 
         /* HUD блоки */
-        .hud-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .hud-grid { margin-top: 25px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .hud-box {
-            background: #000; border: 2px solid #1e293b; padding: 30px;
-            border-radius: 20px; text-align: center; border-bottom: 6px solid var(--neon-pink);
+            background: #000; border: 1px solid #1e293b; padding: 20px;
+            border-radius: 12px; text-align: center; border-bottom: 5px solid var(--neon-pink);
         }
-        .hud-val { display: block; font-size: 3rem; font-family: 'Orbitron'; color: var(--neon-green); }
-        .hud-desc { font-size: 1.1rem; color: #94a3b8; text-transform: uppercase; margin-top: 10px; }
+        .hud-val { display: block; font-size: 2.5rem; font-family: 'Orbitron'; color: var(--neon-green); }
+        .hud-desc { font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; margin-top: 5px; font-weight: bold; }
 
     </style>
 </head>
 <body>
 
 <div class="main-ui">
-    <header><h1>DATA WARS: MEGA</h1></header>
+    <div class="top-nav">
+        <span style="font-family: 'Orbitron'; color: var(--neon-blue);">УРОВЕНЬ <span id="lvl">1</span></span>
+        <div class="xp-container"><div id="xp-bar"></div></div>
+        <span style="font-family: 'Orbitron'; color: var(--neon-green);">ОПЫТ: <span id="xp-val">0</span></span>
+    </div>
 
-    <div class="insight-panel" id="insight">
-        <b>💡 АНАЛИЗАТОР:</b> Выберите параметры и запустите тест. Я объясню, как работает физика вашей сети!
+    <header><h1>БИТВА ДАННЫХ</h1></header>
+
+    <div id="fact-box" class="info-fact">
+        <b>🤖 Академия:</b> Добро пожаловать! Выбери параметры и начни тест, чтобы изучить скорость сетей.
     </div>
 
     <div class="cockpit">
         <div class="control-slot">
-            <label>Объем данных</label>
+            <label>Данные <span class="hint" data-title="Объем информации. Чем больше файл (ГБ), тем дольше он будет загружаться через медленные каналы.">?</span></label>
             <select id="cargo">
-                <option value="100">ФОТО (100 МБ)</option>
-                <option value="1000">ВИДЕО (1 ГБ)</option>
-                <option value="5000">ИГРА (5 ГБ)</option>
+                <option value="50">🖼️ Фото (50 МБ)</option>
+                <option value="500">🎬 Фильм (500 МБ)</option>
+                <option value="2000">🎮 Игра (2 ГБ)</option>
+                <option value="10000">🌍 Вся Википедия (10 ГБ)</option>
             </select>
         </div>
         <div class="control-slot">
-            <label>Тип сети</label>
-            <select id="speed" onchange="updateInsight()">
-                <option value="15">🚜 3G (Мобильный)</option>
-                <option value="100" selected>🚚 4G (Стандарт)</option>
-                <option value="800">🏎️ 5G (Скорость)</option>
-                <option value="2500">🚀 ОПТИКА (Свет)</option>
+            <label>Сеть <span class="hint" data-title="Пропускная способность канала. Измеряется в МБ/с. В реальности 5G в 10 раз быстрее 4G.">?</span></label>
+            <select id="speed">
+                <option value="10">🚜 Старый 3G (10 МБ/с)</option>
+                <option value="100" selected>🚚 Обычный 4G (100 МБ/с)</option>
+                <option value="600">🏎️ Скоростной 5G (600 МБ/с)</option>
+                <option value="2500">🚀 Оптоволокно (2.5 ГБ/с)</option>
             </select>
         </div>
         <div class="control-slot">
-            <label>Стабильность</label>
-            <select id="quality" onchange="updateInsight()">
-                <option value="1">ИДЕАЛЬНО (100%)</option>
-                <option value="0.5">ПОМЕХИ (50%)</option>
-                <option value="0.1">КРИТИЧНО (10%)</option>
+            <label>Стабильность <span class="hint" data-title="Коэффициент помех. В плохую погоду или в тоннеле реальная скорость падает, так как данные теряются.">?</span></label>
+            <select id="quality">
+                <option value="1">Идеальная (100%)</option>
+                <option value="0.5">Средние помехи (50%)</option>
+                <option value="0.1">Критично (10%)</option>
             </select>
         </div>
-        <div class="control-slot">
-            <button class="btn-launch" onclick="startTest()">ЗАПУСК ТЕСТА</button>
+        <div class="control-slot" style="justify-content: flex-end;">
+            <button class="btn-launch" onclick="startTest(false)" style="height: 55px;">ОДИНОЧНЫЙ ТЕСТ</button>
+        </div>
+        <div class="control-slot" style="justify-content: flex-end;">
+            <button class="btn-launch" style="background: var(--neon-pink); color: white; height: 55px;" onclick="startTest(true)">ГОНКА ТЕХНОЛОГИЙ</button>
         </div>
     </div>
 
-    <div id="track-zone"></div>
+    <div class="game-area">
+        <div class="side-panel">📡</div>
+        <div class="track-zone" id="track-zone"></div>
+        <div class="side-panel">💻</div>
+    </div>
 
     <div class="hud-grid">
-        <div class="hud-box"><span class="hud-val" id="hud-v">0</span><span class="hud-desc">МБ / СЕК</span></div>
-        <div class="hud-box" style="border-color: var(--neon-blue);"><span class="hud-val" id="hud-t">0.0</span><span class="hud-desc">ВРЕМЯ (СЕК)</span></div>
-        <div class="hud-box" style="border-color: var(--neon-pink);"><span class="hud-val" id="hud-p">0%</span><span class="hud-desc">ПРОГРЕСС</span></div>
+        <div class="hud-box">
+            <span class="hud-val" id="hud-v">0</span>
+            <span class="hud-desc">Скорость <span class="hint" data-title="Реальная скорость с учетом помех. Показывает, сколько МБ проходит каждую секунду.">?</span></span>
+        </div>
+        <div class="hud-box" style="border-color: var(--neon-blue);">
+            <span class="hud-val" id="hud-t">0.0</span>
+            <span class="hud-desc">Таймер <span class="hint" data-title="Время, затраченное на полную передачу всего объема данных.">?</span></span>
+        </div>
+        <div class="hud-box" style="border-color: var(--neon-pink);">
+            <span class="hud-val" id="hud-p">0%</span>
+            <span class="hud-desc">Прогресс <span class="hint" data-title="Процент успешно доставленных 'пакетов' данных до приемника.">?</span></span>
+        </div>
     </div>
 </div>
 
 <script>
     const zone = document.getElementById('track-zone');
-    const insight = document.getElementById('insight');
-    const icons = { '15': '🚜', '100': '🚚', '800': '🏎️', '2500': '🚀' };
-    let timer;
+    const factBox = document.getElementById('fact-box');
+    const icons = { '10': '🚜', '100': '🚚', '600': '🏎️', '2500': '🚀' };
+    let timers = [];
+    let xp = 0;
+    let level = 1;
 
-    function updateInsight() {
-        const s = document.getElementById('speed').value;
-        const q = document.getElementById('quality').value;
-        
-        let text = "<b>💡 АНАЛИЗАТОР:</b> ";
-        if (s == "2500") text += "Оптоволокно передает данные импульсами лазера. ";
-        if (s == "15") text += "3G использует радиоволны старого поколения, они медленные. ";
-        if (q == "0.1") text += "Внимание! Низкая стабильность означает, что пакеты данных теряются и переотправляются (Packet Loss).";
-        else text += "Стабильная сеть гарантирует, что скорость не будет прыгать.";
-        
-        insight.innerHTML = text;
+    const facts = [
+        "Оптоволокно передает данные с помощью вспышек света!",
+        "В 5G данные передаются на очень высоких частотах, поэтому скорость такая огромная.",
+        "Помехи могут возникать даже от обычной микроволновки, если она стоит рядом с роутером.",
+        "Пакеты данных — это маленькие кусочки твоего файла, на которые он разбивается при отправке.",
+        "Чем выше стабильность, тем меньше 'ошибок' возникает при передаче данных."
+    ];
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSfx(freq, type, dur) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type; osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + dur);
     }
 
-    function startTest() {
-        if(timer) clearInterval(timer);
+    function startTest(isRace) {
+        timers.forEach(clearInterval);
         zone.innerHTML = '';
+        factBox.innerHTML = "<b>🤖 Академия:</b> " + facts[Math.floor(Math.random()*facts.length)];
+        playSfx(300, 'sawtooth', 0.1);
         
         const cargo = parseFloat(document.getElementById('cargo').value);
-        const speed = parseFloat(document.getElementById('speed').value);
         const quality = parseFloat(document.getElementById('quality').value);
-        const vReal = speed * quality;
 
+        if (isRace) {
+            const opts = document.getElementById('speed').options;
+            for(let i=0; i<opts.length; i++) {
+                createTrack(i, opts[i].text, parseFloat(opts[i].value), cargo, quality, false);
+            }
+        } else {
+            const s = document.getElementById('speed');
+            createTrack(0, s.options[s.selectedIndex].text, parseFloat(s.value), cargo, quality, true);
+        }
+    }
+
+    function createTrack(id, name, speed, cargo, quality, updateHud) {
         const lane = document.createElement('div');
         lane.className = 'lane';
-        if (quality < 1) lane.classList.add('unstable');
+        
+        // Логика разворота: ракета не требует инверсии (scaleX), а остальные иконки (трактор, грузовик) - требуют
+        const isRocket = (speed === 2500);
+        const iconClass = isRocket ? 'rocket-fix' : 'reverse';
+
         lane.innerHTML = `
+            <div style="position:absolute; top:8px; left:20px; font-size:1rem; color:var(--neon-blue); z-index:5; font-weight:bold; font-family:'Orbitron'">${name}</div>
             <div class="road-marks"></div>
-            <div class="noise-overlay"></div>
-            <div class="truck-unit" id="truck">${icons[speed] || '🚚'}</div>
+            <div class="truck-unit ${iconClass}" id="truck-${id}">${icons[speed] || '🚚'}</div>
         `;
         zone.appendChild(lane);
         
-        const truck = document.getElementById('truck');
+        const truck = document.getElementById(`truck-${id}`);
         lane.classList.add('moving');
         
         let delivered = 0;
         const start = Date.now();
+        const vReal = speed * quality;
 
-        timer = setInterval(() => {
+        const t = setInterval(() => {
             delivered += vReal / 10;
             let p = Math.min((delivered / cargo) * 100, 100);
-            truck.style.left = `calc(${p}% - 120px)`;
+            
+            // Сдвиг для больших иконок
+            truck.style.left = `calc(${p}% - 110px)`;
 
-            document.getElementById('hud-v').innerText = Math.round(vReal * (0.9 + Math.random()*0.2));
-            document.getElementById('hud-t').innerText = ((Date.now()-start)/1000).toFixed(1);
-            document.getElementById('hud-p').innerText = Math.round(p) + '%';
+            if (updateHud) {
+                document.getElementById('hud-v').innerText = Math.round(vReal * (0.98 + Math.random()*0.04));
+                document.getElementById('hud-t').innerText = ((Date.now()-start)/1000).toFixed(1);
+                document.getElementById('hud-p').innerText = Math.round(p) + '%';
+            }
 
             if (p >= 100) {
-                clearInterval(timer);
+                clearInterval(t);
                 lane.classList.remove('moving');
-                lane.classList.remove('unstable');
                 lane.style.borderColor = 'var(--neon-green)';
+                lane.style.boxShadow = 'inset 0 0 20px var(--neon-green)';
+                playSfx(600, 'sine', 0.2);
+                if (updateHud) addXP(cargo);
             }
         }, 100);
+        timers.push(t);
     }
-    
-    updateInsight();
+
+    function addXP(amount) {
+        xp += Math.round(amount / 40);
+        if (xp >= level * 100) {
+            level++; xp = 0;
+            alert("НОВЫЙ УРОВЕНЬ! Твой статус: Главный Инженер сетей " + level + " ранга!");
+        }
+        document.getElementById('xp-val').innerText = xp;
+        document.getElementById('lvl').innerText = level;
+        document.getElementById('xp-bar').style.width = (xp / (level * 100)) * 100 + '%';
+    }
 </script>
 
 </body>
